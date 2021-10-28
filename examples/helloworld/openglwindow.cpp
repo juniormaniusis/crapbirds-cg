@@ -8,6 +8,7 @@
 #include <gsl/gsl>
 
 #include "abcg.hpp"
+#include <fmt/core.h>
 
 void OpenGLWindow::initializeGL() {
   // Enable Z-buffer test
@@ -107,6 +108,17 @@ void OpenGLWindow::paintUI() {
 
     // Static text
     ImGui::Text("Some example widgets are given below.");
+    // 100x50 button
+    if (ImGui::Button("Press me!", ImVec2(100, 50))) {
+      fmt::print("Button pressed.\n");
+    }
+
+    // Nx50 button, where N is the remaining width available
+    ImGui::Button("Press me!", ImVec2(-1, 50));
+    // See also IsItemHovered, IsItemActive, etc
+    if (ImGui::IsItemClicked()) {
+      fmt::print("Button pressed.\n");
+    }
 
     // Combo box
     {
