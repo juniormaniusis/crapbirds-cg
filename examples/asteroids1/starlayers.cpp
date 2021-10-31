@@ -71,6 +71,12 @@ StarLayers::Nuvem StarLayers::createNuvem() {
       glm::vec2{-2, 4}, glm::vec2{-2, 2}, glm::vec2{-7, 2},
   };
 
+  for (int i = 0; i < positions.size(); i++)
+  {
+    positions[i] /= glm::vec2{-7, 5}*0.5;
+  }
+  
+
   // Generate VBO
   abcg::glGenBuffers(1, &nuvem.m_vbo);
   abcg::glBindBuffer(GL_ARRAY_BUFFER, nuvem.m_vbo);
