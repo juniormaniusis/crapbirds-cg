@@ -26,4 +26,4 @@ Fizemos os desenhos através do [geogebra](https://www.geogebra.org/calculator) 
 
 ### Código
 
-* nuvens.cpp: o desenho das nuvens foi criado no geogebra e extraímos os pontos de seu formato. Criamos um *array de nuvens* e uma função que faz com que os desenhos das nuvens sejam escolhidos aleatoriamente (são dois tipos).
+* nuvens.cpp: o desenho das nuvens foi criado no geogebra e extraímos os pontos de seu formato. Criamos um *array de nuvens* e uma função que faz com que os desenhos das nuvens sejam escolhidos aleatoriamente (são dois tipos de desenho).
