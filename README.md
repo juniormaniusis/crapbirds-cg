@@ -20,3 +20,6 @@ ABCg is licensed under the MIT License. See [LICENSE](https://github.com/hbatage
 * Melissa Gabriela Pereira da Soledade Perrone - RA: 11072216
 
 ### Descrição
+
+Jogo inspirado no estilo de Flappy Bird. O pássaro é o personagem que irá percorrer seu caminho desviando de obstáculos. 
+Fizemos os desenhos através do [geogebra](https://www.geogebra.org/calculator) para definir os pontos no código do jogo. Fizemos o pássaro e as nuvens no geogebra.
