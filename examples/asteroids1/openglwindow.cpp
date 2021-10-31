@@ -70,8 +70,9 @@ void OpenGLWindow::initializeGL() {
   // Load a new font
   ImGuiIO &io{ImGui::GetIO()};
   auto filename{getAssetsPath() + "AngryBirdsMovie.ttf"};
-  m_font = io.Fonts->AddFontFromFileTTF(filename.c_str(), 60.0f);
-  if (m_font == nullptr) {
+  m_font = io.Fonts->AddFontFromFileTTF(filename.c_str(), 45.0f);
+  m_font_score = io.Fonts->AddFontFromFileTTF(filename.c_str(), 20.0f);
+  if (m_font == nullptr || m_font_score == nullptr) {
     throw abcg::Exception{abcg::Exception::Runtime("Cannot load font file")};
   }
 
@@ -101,7 +102,9 @@ void OpenGLWindow::restart() {
 
 void OpenGLWindow::update() {
   float deltaTime{static_cast<float>(getDeltaTime())};
-
+  if (m_gameData.m_state == State::Playing) {
+    m_gameData.score += glm::ceil(deltaTime);
+  }
   // Wait 5 seconds before restarting
   if (m_gameData.m_state != State::Playing &&
       m_restartWaitTimer.elapsed() > 5) {
@@ -143,9 +146,12 @@ void OpenGLWindow::paintUI() {
                            ImGuiWindowFlags_NoInputs};
     ImGui::Begin(" ", nullptr, flags);
     ImGui::PushFont(m_font);
-
     if (m_gameData.m_state == State::GameOver) {
       ImGui::Text("Game Over!");
+      
+      ImGui::PushFont(m_font_score);
+          ImGui::Text("Your Score: %d", m_gameData.score);
+      ImGui::PopFont();    
     } else if (m_gameData.m_state == State::Win) {
       ImGui::Text("*You Win!*");
     }
