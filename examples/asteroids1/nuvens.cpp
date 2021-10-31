@@ -1,8 +1,8 @@
-#include "starlayers.hpp"
+#include "nuvens.hpp"
 
 #include <cppitertools/itertools.hpp>
 
-void StarLayers::initializeGL(GLuint program, int quantity) {
+void nuvens::initializeGL(GLuint program, int quantity) {
   terminateGL();
 
   // Start pseudo-random number generator
@@ -127,7 +127,7 @@ std::vector<glm::vec2> getModel1Positions() {
   return positions;
 }
 
-StarLayers::Nuvem StarLayers::createNuvem(int tipo_nuvem = 2) {
+nuvens::Nuvem nuvens::createNuvem(int tipo_nuvem = 2) {
   Nuvem nuvem;
 
   std::vector<glm::vec2> positions;
@@ -186,7 +186,7 @@ StarLayers::Nuvem StarLayers::createNuvem(int tipo_nuvem = 2) {
   return nuvem;
 }
 
-void StarLayers::paintGL() {
+void nuvens::paintGL() {
   abcg::glUseProgram(m_program);
 
   for (const auto &nuvem : m_nuvens) {
@@ -205,7 +205,7 @@ void StarLayers::paintGL() {
   abcg::glUseProgram(0);
 }
 
-void StarLayers::terminateGL() {
+void nuvens::terminateGL() {
   for (auto &nuvem : m_nuvens) {
     abcg::glDeleteBuffers(1, &nuvem.m_vbo);
     abcg::glDeleteBuffers(1, &nuvem.m_color_vbo);
@@ -213,7 +213,7 @@ void StarLayers::terminateGL() {
   }
 }
 
-void StarLayers::update(const Ship &ship, float deltaTime) {
+void nuvens::update(const Ship &ship, float deltaTime) {
   for (auto &&[index, layer] : iter::enumerate(m_nuvens)) {
     const auto layerSpeedScale{1.0f / (index + 2.0f)};
     layer.m_translation -= ship.m_velocity * deltaTime * layerSpeedScale;

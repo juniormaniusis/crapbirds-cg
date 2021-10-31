@@ -7,7 +7,7 @@
 class Asteroids;
 class Bullets;
 class OpenGLWindow;
-class StarLayers;
+class nuvens;
 class Pipes;
 class Ship {
  public:
@@ -22,7 +22,7 @@ class Ship {
   friend Asteroids;
   friend Bullets;
   friend OpenGLWindow;
-  friend StarLayers;
+  friend nuvens;
   friend Pipes;
 
   GLuint m_program{};

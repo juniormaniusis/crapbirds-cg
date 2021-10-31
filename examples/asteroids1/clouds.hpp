@@ -1,5 +1,5 @@
-#ifndef STARLAYERS_HPP_
-#define STARLAYERS_HPP_
+#ifndef nuvens_HPP_
+#define nuvens_HPP_
 
 #include <array>
 #include <random>
@@ -10,7 +10,7 @@
 
 class OpenGLWindow;
 
-class StarLayers {
+class nuvens {
  public:
   void initializeGL(GLuint program, int quantity);
   void paintGL();
@@ -34,7 +34,7 @@ class StarLayers {
     glm::vec2 m_translation{glm::vec2(0)};
   };
 
-  std::array<StarLayer, 5> m_starLayers;
+  std::array<StarLayer, 5> m_nuvens;
 
   std::default_random_engine m_randomEngine;
 };

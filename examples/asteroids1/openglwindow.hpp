@@ -9,7 +9,7 @@
 #include "asteroids.hpp"
 #include "bullets.hpp"
 #include "ship.hpp"
-#include "starlayers.hpp"
+#include "nuvens.hpp"
 #include "pipe.hpp"
 
 class OpenGLWindow : public abcg::OpenGLWindow {
@@ -29,7 +29,7 @@ class OpenGLWindow : public abcg::OpenGLWindow {
   int m_viewportHeight{};
   GameData m_gameData;
   
-  StarLayers m_starLayers;
+  nuvens m_nuvens;
   Ship m_ship;
   Pipes m_pipes;
 
