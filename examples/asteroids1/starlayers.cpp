@@ -65,17 +65,25 @@ void StarLayers::initializeGL(GLuint program, int quantity) {
 StarLayers::Nuvem StarLayers::createNuvem() {
   Nuvem nuvem;
 
-  std::array<glm::vec2, 11> positions{
-      glm::vec2{-7, 2}, glm::vec2{-7, 3}, glm::vec2{-6, 3}, glm::vec2{-6, 4},
-      glm::vec2{-5, 4}, glm::vec2{-5, 5}, glm::vec2{-3, 5}, glm::vec2{-3, 4},
-      glm::vec2{-2, 4}, glm::vec2{-2, 2}, glm::vec2{-7, 2},
+  std::array<glm::vec2, 18> positions{
+      glm::vec2{0, 1}, glm::vec2{0, 0}, glm::vec2{4, 0},
+
+      glm::vec2{0, 1}, glm::vec2{4, 0}, glm::vec2{4, 1},
+
+      glm::vec2{4, 1}, glm::vec2{3, 2}, glm::vec2{4, 2},
+
+      glm::vec2{4, 1}, glm::vec2{3, 2}, glm::vec2{3, 1},
+
+      glm::vec2{1, 2}, glm::vec2{2, 2}, glm::vec2{2, 1},
+
+      glm::vec2{1, 2}, glm::vec2{2, 1}, glm::vec2{1, 1},
+
   };
 
-  for (int i = 0; i < positions.size(); i++)
-  {
-    positions[i] /= glm::vec2{-7, 5}*0.5;
+  for (int i = 0; i < positions.size(); i++) {
+    positions[i] /= glm::vec2{4, 2};
+    positions[i] *= 0.2f;
   }
-  
 
   // Generate VBO
   abcg::glGenBuffers(1, &nuvem.m_vbo);
@@ -148,7 +156,7 @@ void StarLayers::paintGL() {
                           nuvem.m_translation.y + i);
 
         // abcg::glDrawArrays(GL_TRIANGLE_FAN, 0, asteroid.m_polygonSides + 2);
-        abcg::glDrawArrays(GL_LINE_LOOP, 0, 11);
+        abcg::glDrawArrays(GL_TRIANGLES, 0, 18);
       }
     }
 
