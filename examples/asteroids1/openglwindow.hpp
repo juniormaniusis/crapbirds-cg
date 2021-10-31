@@ -7,7 +7,6 @@
 
 #include "abcg.hpp"
 #include "asteroids.hpp"
-#include "bullets.hpp"
 #include "nuvens.hpp"
 #include "pipe.hpp"
 #include "ship.hpp"
