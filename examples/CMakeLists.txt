@@ -2,5 +2,5 @@
 # add_subdirectory(sierpinski)
 # add_subdirectory(coloredtriangles)
 # add_subdirectory(regularpolygons)
-add_subdirectory(asteroids1)
+add_subdirectory(fastbirds)
 

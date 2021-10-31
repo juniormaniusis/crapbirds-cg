@@ -141,7 +141,7 @@ void OpenGLWindow::paintUI() {
       ImGui::Text("Game Over!");
       
       ImGui::PushFont(m_font_score);
-          ImGui::Text("Your Score: %d", m_gameData.score);
+          ImGui::Text("Your Score: %ld", m_gameData.score);
       ImGui::PopFont();    
     } else if (m_gameData.m_state == State::Win) {
       ImGui::Text("*You Win!*");

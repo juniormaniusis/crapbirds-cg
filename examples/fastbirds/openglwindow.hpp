@@ -6,7 +6,6 @@
 #include <random>
 
 #include "abcg.hpp"
-#include "asteroids.hpp"
 #include "nuvens.hpp"
 #include "pipe.hpp"
 #include "bird.hpp"
