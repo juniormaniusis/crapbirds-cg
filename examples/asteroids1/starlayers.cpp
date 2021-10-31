@@ -80,98 +80,83 @@ StarLayers::Nuvem StarLayers::createNuvem() {
 
   };
 
-  for (int i = 0; i < positions.size(); i++) {
+  auto azul = glm::vec4{.84, .92, 1, .7};
+  auto azulc = glm::vec4{.76, .82, .87, .7};
+  std::array<glm::vec3, 18> colors{azulc,  azulc, azulc, azulc,  azulc,  azulc,
+                                   azulc, azul, azulc, azul, azulc, azulc,
+                                   azulc, azulc, azul,  azul, azulc, azulc};
+
+  for (int i = 0; i < 18; i++) {
     positions[i] /= glm::vec2{4, 2};
-    positions[i] *= 0.2f;
+    // positions[i] *= 0.2f;
   }
 
-  // Generate VBO
+  // cria o VBO de posição
   abcg::glGenBuffers(1, &nuvem.m_vbo);
   abcg::glBindBuffer(GL_ARRAY_BUFFER, nuvem.m_vbo);
   abcg::glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(glm::vec2),
                      positions.data(), GL_STATIC_DRAW);
   abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-  // Get location of attributes in the program
-  GLint positionAttribute{abcg::glGetAttribLocation(m_program, "inPosition")};
+  // cria o VBO de cores
+  abcg::glGenBuffers(1, &nuvem.m_color_vbo);
+  abcg::glBindBuffer(GL_ARRAY_BUFFER, nuvem.m_color_vbo);
+  abcg::glBufferData(GL_ARRAY_BUFFER, colors.size() * sizeof(glm::vec4),
+                     colors.data(), GL_STATIC_DRAW);
+  abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-  // Create VAO
+  // pega os atributos
+  const auto positionAttribute{
+      abcg::glGetAttribLocation(m_program, "inPosition")};
+  const auto colorAttribute{abcg::glGetAttribLocation(m_program, "inColor")};
+
+  // cria o VAO
   abcg::glGenVertexArrays(1, &nuvem.m_vao);
 
-  // Bind vertex attributes to current VAO
+  // vincula os VBOS ao VAO
   abcg::glBindVertexArray(nuvem.m_vao);
 
-  abcg::glBindBuffer(GL_ARRAY_BUFFER, nuvem.m_vbo);
   abcg::glEnableVertexAttribArray(positionAttribute);
+  abcg::glBindBuffer(GL_ARRAY_BUFFER, nuvem.m_vbo);
   abcg::glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 0,
+                              nullptr);
+  abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+  abcg::glEnableVertexAttribArray(colorAttribute);
+  abcg::glBindBuffer(GL_ARRAY_BUFFER, nuvem.m_color_vbo);
+  abcg::glVertexAttribPointer(colorAttribute, 3, GL_FLOAT, GL_FALSE, 0,
                               nullptr);
   abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
 
   // End of binding to current VAO
   abcg::glBindVertexArray(0);
-
   return nuvem;
 }
 
 void StarLayers::paintGL() {
-  /*
-  // abcg::glUseProgram(m_program);
-
-  // abcg::glEnable(GL_BLEND);
-  // abcg::glBlendFunc(GL_ONE, GL_ONE);
-
-  // for (const auto &layer : m_nuvens) {
-  //   abcg::glBindVertexArray(layer.m_vao);
-  //   abcg::glUniform1f(m_pointSizeLoc, layer.m_pointSize);
-
-  //   for (const auto i : {-2, 0, 2}) {
-  //     for (const auto j : {-2, 0, 2}) {
-  //       abcg::glUniform2f(m_translationLoc, layer.m_translation.x + j,
-  //                         layer.m_translation.y + i);
-
-  //       abcg::glDrawArrays(GL_POINTS, 0, layer.m_quantity);
-  //     }
-  //   }
-
-  //   abcg::glBindVertexArray(0);
-  // }
-
-  // abcg::glDisable(GL_BLEND);
-
-  // abcg::glUseProgram(0);
-*/
-
   abcg::glUseProgram(m_program);
 
   for (const auto &nuvem : m_nuvens) {
     abcg::glBindVertexArray(nuvem.m_vao);
 
-    // abcg::glUniform4fv(m_colorLoc, 1, &nuvem.m_color.r);
-    abcg::glUniform4f(m_colorLoc, 1, 1, 1, 0.5f);
-    abcg::glUniform1f(m_scaleLoc, 1);
-    abcg::glUniform1f(m_rotationLoc, 0);
-
     for (auto i : {-2, 0, 2}) {
       for (auto j : {-2, 0, 2}) {
         abcg::glUniform2f(m_translationLoc, nuvem.m_translation.x + j,
                           nuvem.m_translation.y + i);
-
-        // abcg::glDrawArrays(GL_TRIANGLE_FAN, 0, asteroid.m_polygonSides + 2);
+        abcg::glEnable(GL_BLEND);
         abcg::glDrawArrays(GL_TRIANGLES, 0, 18);
       }
     }
-
     abcg::glBindVertexArray(0);
   }
-
   abcg::glUseProgram(0);
 }
 
 void StarLayers::terminateGL() {
-  for (auto &layer : m_nuvens) {
-    abcg::glDeleteBuffers(1, &layer.m_vbo);
-    abcg::glDeleteBuffers(1, &layer.m_color_vbo);
-    abcg::glDeleteVertexArrays(1, &layer.m_vao);
+  for (auto &nuvem : m_nuvens) {
+    abcg::glDeleteBuffers(1, &nuvem.m_vbo);
+    abcg::glDeleteBuffers(1, &nuvem.m_color_vbo);
+    abcg::glDeleteVertexArrays(1, &nuvem.m_vao);
   }
 }
 

@@ -139,7 +139,7 @@ Pipes::Pipe Pipes::createPipe(glm::vec2 translation) {
 
 void Pipes::update(const Ship &ship, float deltaTime) {
   for (auto &pipe : m_pipes) {
-    printf("pipe{x=%f; y=%f}\n", pipe.m_translation.x, pipe.m_translation.y);
+    // printf("pipe{x=%f; y=%f}\n", pipe.m_translation.x, pipe.m_translation.y);
     // pipe.m_translation -= ship.m_velocity * deltaTime;
     pipe.m_translation.x = ship.m_translation.x;
     pipe.m_translation.y =

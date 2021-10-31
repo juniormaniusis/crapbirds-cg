@@ -72,9 +72,9 @@ void OpenGLWindow::initializeGL() {
   m_pipeProgram = createProgramFromFile(getAssetsPath() + "pipes.vert",
                                         getAssetsPath() + "pipes.frag");
 
-  // Create program to render the stars
-  m_starsProgram = createProgramFromFile(getAssetsPath() + "stars.vert",
-                                         getAssetsPath() + "stars.frag");
+  // // Create program to render the stars
+  // m_objectsProgram = createProgramFromFile(getAssetsPath() + "stars.vert",
+  //                                        getAssetsPath() + "stars.frag");
 
   abcg::glClearColor(.53, .61, .92, 0);
 
@@ -91,7 +91,7 @@ void OpenGLWindow::initializeGL() {
 
 void OpenGLWindow::restart() {
   m_gameData.m_state = State::Playing;
-  m_starLayers.initializeGL(m_starsProgram, 25);
+  m_starLayers.initializeGL(m_objectsProgram, 1);
   m_ship.initializeGL(m_objectsProgram);
   m_pipes.initializeGL(m_objectsProgram, m_ship, 2);
 }
@@ -156,7 +156,7 @@ void OpenGLWindow::resizeGL(int width, int height) {
 }
 
 void OpenGLWindow::terminateGL() {
-  abcg::glDeleteProgram(m_starsProgram);
+  abcg::glDeleteProgram(m_objectsProgram);
   abcg::glDeleteProgram(m_objectsProgram);
   abcg::glDeleteProgram(m_objectsProgram);
   m_ship.terminateGL();
