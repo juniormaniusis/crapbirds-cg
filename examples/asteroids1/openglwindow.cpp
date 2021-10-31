@@ -4,7 +4,16 @@
 
 #include "abcg.hpp"
 
-void OpenGLWindow::checkCollisions() { return; }
+void OpenGLWindow::checkCollisions() {
+  auto upper_pipe = m_pipes.m_pipes[0];
+  auto bottom_pipe = m_pipes.m_pipes[1];
+
+  if (upper_pipe.m_translation.y < 0.003 ||
+      bottom_pipe.m_translation.y > 0.003) {
+    m_gameData.m_state = State::GameOver;
+    m_restartWaitTimer.restart();
+  }
+}
 
 void OpenGLWindow::handleEvent(SDL_Event &event) {
   // Keyboard events
@@ -60,7 +69,7 @@ void OpenGLWindow::handleEvent(SDL_Event &event) {
 void OpenGLWindow::initializeGL() {
   // Load a new font
   ImGuiIO &io{ImGui::GetIO()};
-  auto filename{getAssetsPath() + "Inconsolata-Medium.ttf"};
+  auto filename{getAssetsPath() + "AngryBirdsMovie.ttf"};
   m_font = io.Fonts->AddFontFromFileTTF(filename.c_str(), 60.0f);
   if (m_font == nullptr) {
     throw abcg::Exception{abcg::Exception::Runtime("Cannot load font file")};
