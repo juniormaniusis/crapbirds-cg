@@ -31,13 +31,15 @@ class StarLayers {
     GLuint m_vbo{};
     GLuint m_color_vbo{};
     glm::vec2 m_translation{glm::vec2(0)};
+    int tipo;
+    int qtd_pts;
   };
 
-  std::array<Nuvem, 1> m_nuvens;
+  std::array<Nuvem, 2> m_nuvens;
 
   std::default_random_engine m_randomEngine;
 
-  StarLayers::Nuvem createNuvem();
+  StarLayers::Nuvem createNuvem(int model);
 };
 
 #endif

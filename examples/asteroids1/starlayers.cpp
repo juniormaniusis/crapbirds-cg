@@ -58,14 +58,33 @@ void StarLayers::initializeGL(GLuint program, int quantity) {
       // End of binding to current VAO
       abcg::glBindVertexArray(0);
       /*/
-    nuvem = createNuvem();
+    nuvem = createNuvem(2);
   }
 }
 
-StarLayers::Nuvem StarLayers::createNuvem() {
-  Nuvem nuvem;
+std::vector<glm::vec4> getModel1Colors() {
+  auto azul = glm::vec4{.84, .92, 1, .7};
+  auto azulc = glm::vec4{.76, .82, .87, .7};
 
-  std::array<glm::vec2, 18> positions{
+  std::vector<glm::vec4> colors{azulc, azulc, azulc, azulc, azulc,
+                                azulc, azulc, azul,  azulc, azul,
+                                azulc, azulc, azulc, azulc, azul};
+  return colors;
+}
+
+std::vector<glm::vec4> getModel2Colors() {
+  auto azul = glm::vec4{.84, .92, 1, .7};
+  auto azulc = glm::vec4{.76, .82, .87, .7};
+
+  std::vector<glm::vec4> colors{azulc, azulc, azulc, azulc, azulc, azulc,
+                                azulc, azul,  azulc, azul,  azulc, azulc,
+                                azulc, azulc, azul,  azulc, azulc, azulc};
+
+  return colors;
+}
+
+std::vector<glm::vec2> getModel2Positions() {
+  std::vector<glm::vec2> positions{
       glm::vec2{0, 1}, glm::vec2{0, 0}, glm::vec2{4, 0},
 
       glm::vec2{0, 1}, glm::vec2{4, 0}, glm::vec2{4, 1},
@@ -79,17 +98,51 @@ StarLayers::Nuvem StarLayers::createNuvem() {
       glm::vec2{1, 2}, glm::vec2{2, 1}, glm::vec2{1, 1},
 
   };
-
-  auto azul = glm::vec4{.84, .92, 1, .7};
-  auto azulc = glm::vec4{.76, .82, .87, .7};
-  std::array<glm::vec3, 18> colors{azulc,  azulc, azulc, azulc,  azulc,  azulc,
-                                   azulc, azul, azulc, azul, azulc, azulc,
-                                   azulc, azulc, azul,  azul, azulc, azulc};
-
-  for (int i = 0; i < 18; i++) {
+  for (int i = 0; i < positions.size(); i++) {
     positions[i] /= glm::vec2{4, 2};
-    // positions[i] *= 0.2f;
   }
+  return positions;
+}
+
+std::vector<glm::vec2> getModel1Positions() {
+  // pontos das nuvens
+  glm::vec2 A, B, C, D, E, F, G, H, I;
+
+  A = glm::vec2{-6.34, -3.9};
+  B = glm::vec2{5.65, -3.9};
+  C = glm::vec2{-4.62, 2.64};
+  D = glm::vec2{4.38, 2.58};
+  E = glm::vec2{-0.34, 6.56};
+  F = glm::vec2{-3.6, 5.6};
+  G = glm::vec2{3.36, 5.42};
+  H = glm::vec2{-5.16, 3.98};
+  I = glm::vec2{4.62, 3.7};
+
+  std::vector<glm::vec2> positions{C, H, F, C, F, E, C, E, D, E, D, G, D, G, I};
+
+  for (int i = 0; i < positions.size(); i++) {
+    positions[i] /= glm::vec2{6.34, 6.56};
+  }
+
+  return positions;
+}
+
+StarLayers::Nuvem StarLayers::createNuvem(int tipo_nuvem = 2) {
+  Nuvem nuvem;
+
+  std::vector<glm::vec2> positions;
+  std::vector<glm::vec4> colors;
+  nuvem.tipo = tipo_nuvem;
+  
+  if (tipo_nuvem == 1) {
+    positions = getModel1Positions();
+    colors = getModel1Colors();
+  } else {
+    positions = getModel2Positions();
+    colors = getModel2Colors();
+  }
+
+  nuvem.qtd_pts = positions.size();
 
   // cria o VBO de posição
   abcg::glGenBuffers(1, &nuvem.m_vbo);
@@ -144,7 +197,7 @@ void StarLayers::paintGL() {
         abcg::glUniform2f(m_translationLoc, nuvem.m_translation.x + j,
                           nuvem.m_translation.y + i);
         abcg::glEnable(GL_BLEND);
-        abcg::glDrawArrays(GL_TRIANGLES, 0, 18);
+        abcg::glDrawArrays(GL_TRIANGLES, 0, nuvem.qtd_pts);
       }
     }
     abcg::glBindVertexArray(0);
