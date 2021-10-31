@@ -193,8 +193,6 @@ void Ship::update(const GameData &gameData, float deltaTime) {
   //   m_velocity += forward * deltaTime;
   // }
 
-  printf("*****\nx=%f;y=%f;\n", m_velocity.x, m_velocity.y);
-
   // aplica a gravidade
   m_velocity += glm::vec2(0, -4.2) * deltaTime;
 

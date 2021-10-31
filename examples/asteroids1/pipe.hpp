@@ -13,7 +13,8 @@ class OpenGLWindow;
 
 class Pipes {
  public:
-  void initializeGL(GLuint program, int quantity);
+  void initializeGL(GLuint program, const Ship &ship, int quantity);
+  // void initializeGL(GLuint program, int quantity);
   void paintGL();
   void terminateGL();
 
@@ -39,10 +40,10 @@ class Pipes {
     
     glm::vec2 m_translation{glm::vec2(0)};
     
-    glm::vec2 m_velocity{glm::vec2(0)};
+    glm::vec2 m_velocity{glm::vec2(-2, 0)};
   };
 
-  std::list<Pipe> m_pipes;
+  std::vector<Pipe> m_pipes;
 
   std::default_random_engine m_randomEngine;
   std::uniform_real_distribution<float> m_randomDist{-1.0f, 1.0f};
