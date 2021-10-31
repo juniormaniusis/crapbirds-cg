@@ -13,9 +13,10 @@ Developed by Harlen Batagelo.
 
 ABCg is licensed under the MIT License. See [LICENSE](https://github.com/hbatagelo/abcg/blob/main/LICENSE) for more information.
 
+----
 
-## Nomes e RA
+### Nomes e RA
 Carlos Maniusis Jr. - RA: 11081816
 Melissa Gabriela Pereira da Soledade Perrone - RA: 11072216
 
-## Descrição
+### Descrição
