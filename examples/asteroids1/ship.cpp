@@ -50,13 +50,14 @@ void Ship::initializeGL(GLuint program) {
   const std::array indices{C, D, E, E, F, C, F, K, E, F, G, K, K, J,
                            E, G, I, J, G, H, I, J, M, L, L, O, N};
 
-  auto verde = glm::vec4{.17, .35, .15, 0.5};
-  auto laranja = glm::vec4{1, 0.27, 0, 0.5};
+  auto branco = glm::vec4{.84, .11, .25, 1};
+  auto cinza = glm::vec4{.97, .89, .33, 1};
+  auto laranja = glm::vec4{.88, .45, .27, 1};
+
   std::array<glm::vec4, 27> colors{
-      verde,   verde,   verde,   laranja, laranja, laranja, laranja,
-      laranja, laranja, verde,   verde,   verde,   laranja, laranja,
-      laranja, laranja, laranja, laranja, verde,   verde,   verde,
-      laranja, laranja, laranja, laranja, laranja, laranja};
+      cinza, cinza, cinza, branco, branco, branco, branco, branco, branco,
+      cinza, cinza, cinza, branco, branco, branco, branco, branco, branco,
+      cinza, cinza, cinza, branco, branco, laranja, laranja, laranja, laranja};
 
   // clang-format on
   //////////////////////////////// positions /////////////////////q
@@ -171,10 +172,10 @@ void Ship::terminateGL() {
 float min(float a, float b) { return a <= b ? a : b; }
 float max(float a, float b) { return a >= b ? a : b; }
 void Ship::update(const GameData &gameData, float deltaTime) {
-  
   if (m_velocity.y >= 0) {
     m_rotation =
         glm::wrapAngle(m_rotation + glm::length(m_velocity) * deltaTime);
+
   } else {
     m_rotation =
         glm::wrapAngle(m_rotation - glm::length(m_velocity) * deltaTime);

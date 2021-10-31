@@ -40,7 +40,7 @@ class Ship {
 
   glm::vec4 m_color{1};
   float m_rotation{};
-  float m_scale{0.125f};
+  float m_scale{0.150f};
   glm::vec2 m_translation{glm::vec2(0)};
   glm::vec2 m_velocity{glm::vec2(2, 0)};
   

@@ -72,7 +72,7 @@ void OpenGLWindow::initializeGL() {
   m_starsProgram = createProgramFromFile(getAssetsPath() + "stars.vert",
                                          getAssetsPath() + "stars.frag");
 
-  abcg::glClearColor(0, 0, 0, 0);
+  abcg::glClearColor(.53, .61, .92, 0);
 
 #if !defined(__EMSCRIPTEN__)
   abcg::glEnable(GL_PROGRAM_POINT_SIZE);
