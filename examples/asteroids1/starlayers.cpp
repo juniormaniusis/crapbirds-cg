@@ -146,7 +146,8 @@ void StarLayers::paintGL() {
   for (const auto &nuvem : m_nuvens) {
     abcg::glBindVertexArray(nuvem.m_vao);
 
-    abcg::glUniform4fv(m_colorLoc, 1, &nuvem.m_color.r);
+    // abcg::glUniform4fv(m_colorLoc, 1, &nuvem.m_color.r);
+    abcg::glUniform4f(m_colorLoc, 1, 1, 1, 0.5f);
     abcg::glUniform1f(m_scaleLoc, 1);
     abcg::glUniform1f(m_rotationLoc, 0);
 
@@ -169,6 +170,7 @@ void StarLayers::paintGL() {
 void StarLayers::terminateGL() {
   for (auto &layer : m_nuvens) {
     abcg::glDeleteBuffers(1, &layer.m_vbo);
+    abcg::glDeleteBuffers(1, &layer.m_color_vbo);
     abcg::glDeleteVertexArrays(1, &layer.m_vao);
   }
 }

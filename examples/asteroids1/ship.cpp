@@ -87,10 +87,6 @@ void Ship::initializeGL(GLuint program) {
                      GL_STATIC_DRAW);
   abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-  // Generate EBO
-  abcg::glGenBuffers(1, &m_color_ebo);
-  abcg::glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_color_ebo);
-
   abcg::glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
   // Get location of attributes in the program
@@ -118,7 +114,7 @@ void Ship::initializeGL(GLuint program) {
   abcg::glVertexAttribPointer(colorAttribute, 4, GL_FLOAT, GL_FALSE, 0,
                               nullptr);
   abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
-  // abcg::glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_color_ebo);
+
 
   // End of binding to current VAO
   abcg::glBindVertexArray(0);
@@ -166,7 +162,7 @@ void Ship::terminateGL() {
   abcg::glDeleteBuffers(1, &m_vbo);
   abcg::glDeleteBuffers(1, &m_ebo);
   abcg::glDeleteBuffers(1, &m_color_vbo);
-  abcg::glDeleteBuffers(1, &m_color_ebo);
+
   abcg::glDeleteVertexArrays(1, &m_vao);
 }
 float min(float a, float b) { return a <= b ? a : b; }

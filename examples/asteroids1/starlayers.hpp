@@ -29,7 +29,7 @@ class StarLayers {
   struct Nuvem {
     GLuint m_vao{};
     GLuint m_vbo{};
-    glm::vec4 m_color {.5, .5, .5, .5};
+    GLuint m_color_vbo{};
     glm::vec2 m_translation{glm::vec2(0)};
   };
 

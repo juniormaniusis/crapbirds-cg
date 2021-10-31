@@ -37,7 +37,7 @@ class Ship {
   GLuint m_ebo{};
 
   GLuint m_color_vbo{};
-  GLuint m_color_ebo{};
+
 
   glm::vec4 m_color{1};
   float m_rotation{};
