@@ -22,5 +22,8 @@ ABCg is licensed under the MIT License. See [LICENSE](https://github.com/hbatage
 ### Descrição
 
 Jogo inspirado no estilo de Flappy Bird. O pássaro é o personagem que irá percorrer seu caminho desviando de obstáculos. Se ele bater em um dos obstáculos, o jogador perde.
-Principais pontos sobre o jogo:
-* Fizemos os desenhos através do [geogebra](https://www.geogebra.org/calculator) para definir os pontos no código. Desenhamos o pássaro, as nuvens do plano de fundo e os obstáculos com a ferramenta de *segmento de reta* do geogebra. Após desenhar, extraímos os pontos (x,y) que compõem os desenhos. 
+Fizemos os desenhos através do [geogebra](https://www.geogebra.org/calculator) para definir os pontos no código. Desenhamos o pássaro, as nuvens do plano de fundo e os obstáculos com a ferramenta de *segmento de reta* do geogebra. Após desenhar, extraímos os pontos (x,y) que compõem os desenhos. 
+
+### Código
+
+* nuvens.cpp: o desenho das nuvens foi criado no geogebra e extraímos os pontos de seu formato. Criamos um *array de nuvens* e uma função que faz com que os desenhos das nuvens sejam escolhidos aleatoriamente (são dois tipos).
