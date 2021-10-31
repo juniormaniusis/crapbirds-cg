@@ -4,6 +4,8 @@
 
 #include "abcg.hpp"
 
+void OpenGLWindow::checkCollisions() { return; }
+
 void OpenGLWindow::handleEvent(SDL_Event &event) {
   // Keyboard events
   if (event.type == SDL_KEYDOWN) {
@@ -68,7 +70,6 @@ void OpenGLWindow::initializeGL() {
   m_objectsProgram = createProgramFromFile(getAssetsPath() + "objects.vert",
                                            getAssetsPath() + "objects.frag");
 
-
   abcg::glClearColor(.53, .61, .92, 0);
 
 #if !defined(__EMSCRIPTEN__)
@@ -102,6 +103,10 @@ void OpenGLWindow::update() {
   m_ship.update(m_gameData, deltaTime);
   m_nuvens.update(m_ship, deltaTime);
   m_pipes.update(m_ship, deltaTime);
+
+  if (m_gameData.m_state == State::Playing) {
+    checkCollisions();
+  }
 }
 
 void OpenGLWindow::paintGL() {
