@@ -59,28 +59,14 @@ void Bird::initializeGL(GLuint program) {
       cinza, cinza, cinza, branco, branco, branco, branco, branco, branco,
       cinza, cinza, cinza, branco, branco, laranja, laranja, laranja, laranja};
 
-  // clang-format on
-  //////////////////////////////// positions /////////////////////q
-  // Generate VBO
+  // cria o VBO de posições
   abcg::glGenBuffers(1, &m_vbo);
   abcg::glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
   abcg::glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions.data(),
                      GL_STATIC_DRAW);
   abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-  // Generate EBO
-  abcg::glGenBuffers(1, &m_ebo);
-  abcg::glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-  abcg::glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices.data(),
-                     GL_STATIC_DRAW);
-  abcg::glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-  // Get location of attributes in the program
-  GLint positionAttribute{abcg::glGetAttribLocation(m_program, "inPosition")};
-
-  //////////////////////////////// end positions /////////////////////q
-
-  //////////////////////////////// colors /////////////////////q
+  // cria o vbo de posicoes
   abcg::glGenBuffers(1, &m_color_vbo);
   abcg::glBindBuffer(GL_ARRAY_BUFFER, m_color_vbo);
   abcg::glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors.data(),
@@ -89,15 +75,21 @@ void Bird::initializeGL(GLuint program) {
 
   abcg::glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-  // Get location of attributes in the program
+  // cria o EBO (indices)
+  abcg::glGenBuffers(1, &m_ebo);
+  abcg::glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
+  abcg::glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices.data(),
+                     GL_STATIC_DRAW);
+  abcg::glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+  // atributos
+  GLint positionAttribute{abcg::glGetAttribLocation(m_program, "inPosition")};
   GLint colorAttribute{abcg::glGetAttribLocation(m_program, "inColor")};
 
-  //////////////////////////////// end colors /////////////////////q
-
-  // Create VAO
+  // cria o VAO
   abcg::glGenVertexArrays(1, &m_vao);
 
-  // Bind vertex attributes to current VAO
+  // assinala os VBOS no VAO
   abcg::glBindVertexArray(m_vao);
 
   abcg::glEnableVertexAttribArray(positionAttribute);
@@ -105,10 +97,9 @@ void Bird::initializeGL(GLuint program) {
   abcg::glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 0,
                               nullptr);
   abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
-
   abcg::glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
 
-  /////// color
+
   abcg::glEnableVertexAttribArray(colorAttribute);
   abcg::glBindBuffer(GL_ARRAY_BUFFER, m_color_vbo);
   abcg::glVertexAttribPointer(colorAttribute, 4, GL_FLOAT, GL_FALSE, 0,
@@ -116,7 +107,7 @@ void Bird::initializeGL(GLuint program) {
   abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
-  // End of binding to current VAO
+  // encerra a atribuicao
   abcg::glBindVertexArray(0);
 }
 
@@ -130,25 +121,6 @@ void Bird::paintGL(const GameData &gameData) {
   abcg::glUniform1f(m_scaleLoc, m_scale);
   abcg::glUniform1f(m_rotationLoc, m_rotation);
   abcg::glUniform2fv(m_translationLoc, 1, &m_translation.x);
-
-  // // Restart thruster blink timer every 100 ms
-  // if (m_trailBlinkTimer.elapsed() > 100.0 / 1000.0)
-  // m_trailBlinkTimer.restart();
-
-  // if (gameData.m_input[static_cast<size_t>(Input::Up)]) {
-  //   // Show thruster trail during 50 ms
-  //   if (m_trailBlinkTimer.elapsed() < 50.0 / 1000.0) {
-  //     abcg::glEnable(GL_BLEND);
-  //     abcg::glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-  //     // 50% transparent
-  //     abcg::glUniform4f(m_colorLoc, 1, 1, 1, 0.5f);
-
-  //     abcg::glDrawElements(GL_TRIANGLES, 14 * 3, GL_UNSIGNED_INT, nullptr);
-
-  //     abcg::glDisable(GL_BLEND);
-  //   }
-  // }
 
   abcg::glUniform4f(m_colorLoc, 0, 1, 0, 0);
   abcg::glDrawElements(GL_TRIANGLES, 12 * 3, GL_UNSIGNED_INT, nullptr);
@@ -168,6 +140,9 @@ void Bird::terminateGL() {
 float min(float a, float b) { return a <= b ? a : b; }
 float max(float a, float b) { return a >= b ? a : b; }
 void Bird::update(const GameData &gameData, float deltaTime) {
+  
+  // se a velocidade do passaro, no eixo y for positiva, a rotação é aplicada no sentido anti horario
+  // caso contrario, no sentido horario
   if (m_velocity.y >= 0) {
     m_rotation =
         glm::wrapAngle(m_rotation + glm::length(m_velocity) * deltaTime);
@@ -176,22 +151,14 @@ void Bird::update(const GameData &gameData, float deltaTime) {
     m_rotation =
         glm::wrapAngle(m_rotation - glm::length(m_velocity) * deltaTime);
   }
-
-  // printf("rotation::%f", m_rotation);
+  
+  // manter o angulo entre 0 e 2pi
   m_rotation = glm::wrapAngle(m_rotation);
-  // printf("rotation::%f", m_rotation);
-
-  // Apply thrust
-  // if (gameData.m_input[static_cast<size_t>(Input::Fire)] &&
-  //     gameData.m_state == State::Playing) {
-  //   // Thrust in the forward vector
-  //   glm::vec2 forward = glm::rotate(glm::vec2{0.0f, 1.0f}, m_rotation);
-  //   m_velocity += forward * deltaTime;
-  // }
 
   // aplica a gravidade
   m_velocity += glm::vec2(0, -4.2) * deltaTime;
 
+  // se o jogador clicar, aplica uma força para cima, interrompendo sua queda.
   if (gameData.m_input[static_cast<size_t>(Input::Fire)] &&
       gameData.m_state == State::Playing) {
     m_velocity.y = 3;
