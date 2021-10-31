@@ -16,7 +16,7 @@ ABCg is licensed under the MIT License. See [LICENSE](https://github.com/hbatage
 ----
 
 ### Nomes e RA
-Carlos Maniusis Jr. - RA: 11081816
-Melissa Gabriela Pereira da Soledade Perrone - RA: 11072216
+* Carlos Maniusis Jr. - RA: 11081816
+* Melissa Gabriela Pereira da Soledade Perrone - RA: 11072216
 
 ### Descrição
