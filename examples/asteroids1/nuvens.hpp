@@ -33,9 +33,10 @@ class nuvens {
     glm::vec2 m_translation{glm::vec2(0)};
     int tipo;
     int qtd_pts;
+    int fator_velocidade;
   };
 
-  std::array<Nuvem, 4> m_nuvens;
+  std::array<Nuvem, 10> m_nuvens;
 
   std::default_random_engine m_randomEngine;
 

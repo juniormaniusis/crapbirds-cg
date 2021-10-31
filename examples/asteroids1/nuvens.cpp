@@ -15,11 +15,9 @@ void nuvens::initializeGL(GLuint program, int quantity) {
 
   // para cada nuvens, definir a sua aparencia
   for (auto &&[index, nuvem] : iter::enumerate(m_nuvens)) {
-    nuvem.m_translation = glm::vec2(1, 0);
-  
     auto sorteado{faixa(m_randomEngine)};
 
-    if (sorteado > 0.2) {
+    if (sorteado > .3) {
       nuvem = createNuvem(1);
     } else {
       nuvem = createNuvem(2);
@@ -87,6 +85,7 @@ std::vector<glm::vec2> getModel1Positions() {
 
   for (int i = 0; i < positions.size(); i++) {
     positions[i] /= glm::vec2{6.34, 6.56};
+    positions[i] *= 1.3;
   }
 
   return positions;
@@ -95,10 +94,20 @@ std::vector<glm::vec2> getModel1Positions() {
 nuvens::Nuvem nuvens::createNuvem(int tipo_nuvem = 2) {
   Nuvem nuvem;
 
+  m_randomEngine.seed(
+      std::chrono::steady_clock::now().time_since_epoch().count());
+
+  std::uniform_real_distribution<float> faixaPontos(-1, 1);
+  std::uniform_real_distribution<float> velocidade(1, 1.5);
+  nuvem.m_translation.y = faixaPontos(m_randomEngine);
+  nuvem.m_translation.x = faixaPontos(m_randomEngine);
+  nuvem.fator_velocidade = velocidade(m_randomEngine);
+
+  // define o formato da nuvem
   std::vector<glm::vec2> positions;
   std::vector<glm::vec4> colors;
   nuvem.tipo = tipo_nuvem;
-  
+
   if (tipo_nuvem == 1) {
     positions = getModel1Positions();
     colors = getModel1Colors();
@@ -106,7 +115,6 @@ nuvens::Nuvem nuvens::createNuvem(int tipo_nuvem = 2) {
     positions = getModel2Positions();
     colors = getModel2Colors();
   }
-
   nuvem.qtd_pts = positions.size();
 
   // cria o VBO de posição
@@ -117,6 +125,7 @@ nuvens::Nuvem nuvens::createNuvem(int tipo_nuvem = 2) {
   abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
 
   // cria o VBO de cores
+
   abcg::glGenBuffers(1, &nuvem.m_color_vbo);
   abcg::glBindBuffer(GL_ARRAY_BUFFER, nuvem.m_color_vbo);
   abcg::glBufferData(GL_ARRAY_BUFFER, colors.size() * sizeof(glm::vec4),
@@ -179,14 +188,13 @@ void nuvens::terminateGL() {
 }
 
 void nuvens::update(const Ship &ship, float deltaTime) {
-  for (auto &&[index, layer] : iter::enumerate(m_nuvens)) {
+  for (auto &&[index, nuvem] : iter::enumerate(m_nuvens)) {
     const auto layerSpeedScale{1.0f / (index + 2.0f)};
-    layer.m_translation -= ship.m_velocity * deltaTime * layerSpeedScale;
+    nuvem.m_translation -= ship.m_velocity * deltaTime * layerSpeedScale;
 
-    // Wrap-around
-    if (layer.m_translation.x < -1.0f) layer.m_translation.x += 2.0f;
-    if (layer.m_translation.x > +1.0f) layer.m_translation.x -= 2.0f;
-    if (layer.m_translation.y < -1.0f) layer.m_translation.y += 2.0f;
-    if (layer.m_translation.y > +1.0f) layer.m_translation.y -= 2.0f;
+    if (nuvem.m_translation.x < -1.0f) nuvem.m_translation.x += 2.0f;
+    if (nuvem.m_translation.x > +1.0f) nuvem.m_translation.x -= 2.0f;
+    if (nuvem.m_translation.y < -1.0f) nuvem.m_translation.y += 2.0f;
+    if (nuvem.m_translation.y > +1.0f) nuvem.m_translation.y -= 2.0f;
   }
 }
