@@ -9,7 +9,7 @@
 #include "asteroids.hpp"
 #include "nuvens.hpp"
 #include "pipe.hpp"
-#include "ship.hpp"
+#include "bird.hpp"
 
 class OpenGLWindow : public abcg::OpenGLWindow {
  protected:
@@ -28,7 +28,7 @@ class OpenGLWindow : public abcg::OpenGLWindow {
   GameData m_gameData;
 
   nuvens m_nuvens;
-  Ship m_ship;
+  Bird m_bird;
   Pipes m_pipes;
 
   abcg::ElapsedTimer m_restartWaitTimer;

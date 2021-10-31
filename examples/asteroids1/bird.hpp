@@ -9,7 +9,7 @@ class Bullets;
 class OpenGLWindow;
 class nuvens;
 class Pipes;
-class Ship {
+class Bird {
  public:
   void initializeGL(GLuint program);
   void paintGL(const GameData &gameData);

@@ -7,18 +7,18 @@
 
 #include "abcg.hpp"
 #include "gamedata.hpp"
-#include "ship.hpp"
+#include "bird.hpp"
 
 class OpenGLWindow;
 
 class Pipes {
  public:
-  void initializeGL(GLuint program, const Ship &ship, int quantity);
+  void initializeGL(GLuint program, const Bird &bird, int quantity);
   // void initializeGL(GLuint program, int quantity);
   void paintGL();
   void terminateGL();
 
-  void update(const Ship &ship, float deltaTime);
+  void update(const Bird &bird, float deltaTime);
 
  private:
   friend OpenGLWindow;

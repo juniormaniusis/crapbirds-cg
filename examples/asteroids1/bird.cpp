@@ -1,9 +1,9 @@
-#include "ship.hpp"
+#include "bird.hpp"
 
 #include <glm/gtx/fast_trigonometry.hpp>
 #include <glm/gtx/rotate_vector.hpp>
 
-void Ship::initializeGL(GLuint program) {
+void Bird::initializeGL(GLuint program) {
   terminateGL();
 
   m_program = program;
@@ -120,7 +120,7 @@ void Ship::initializeGL(GLuint program) {
   abcg::glBindVertexArray(0);
 }
 
-void Ship::paintGL(const GameData &gameData) {
+void Bird::paintGL(const GameData &gameData) {
   if (gameData.m_state != State::Playing) return;
 
   abcg::glUseProgram(m_program);
@@ -158,7 +158,7 @@ void Ship::paintGL(const GameData &gameData) {
   abcg::glUseProgram(0);
 }
 
-void Ship::terminateGL() {
+void Bird::terminateGL() {
   abcg::glDeleteBuffers(1, &m_vbo);
   abcg::glDeleteBuffers(1, &m_ebo);
   abcg::glDeleteBuffers(1, &m_color_vbo);
@@ -167,7 +167,7 @@ void Ship::terminateGL() {
 }
 float min(float a, float b) { return a <= b ? a : b; }
 float max(float a, float b) { return a >= b ? a : b; }
-void Ship::update(const GameData &gameData, float deltaTime) {
+void Bird::update(const GameData &gameData, float deltaTime) {
   if (m_velocity.y >= 0) {
     m_rotation =
         glm::wrapAngle(m_rotation + glm::length(m_velocity) * deltaTime);

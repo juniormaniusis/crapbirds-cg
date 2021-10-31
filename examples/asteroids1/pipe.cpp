@@ -3,7 +3,7 @@
 #include <cppitertools/itertools.hpp>
 #include <glm/gtx/fast_trigonometry.hpp>
 
-void Pipes::initializeGL(GLuint program, const Ship &ship, int quantity) {
+void Pipes::initializeGL(GLuint program, const Bird &bird, int quantity) {
   terminateGL();
 
   m_program = program;
@@ -90,10 +90,10 @@ Pipes::Pipe Pipes::createPipe(glm::vec2 translation) {
   return pipe;
 }
 
-void Pipes::update(const Ship &ship, float deltaTime) {
+void Pipes::update(const Bird &bird, float deltaTime) {
   for (auto &pipe : m_pipes) {
-    pipe.m_translation.x = ship.m_translation.x;
+    pipe.m_translation.x = bird.m_translation.x;
     pipe.m_translation.y =
-        pipe.m_translation.y - (ship.m_velocity.y * deltaTime);
+        pipe.m_translation.y - (bird.m_velocity.y * deltaTime);
   }
 }

@@ -87,8 +87,8 @@ void OpenGLWindow::initializeGL() {
 void OpenGLWindow::restart() {
   m_gameData.m_state = State::Playing;
   m_nuvens.initializeGL(m_objectsProgram);
-  m_ship.initializeGL(m_objectsProgram);
-  m_pipes.initializeGL(m_objectsProgram, m_ship, 2);
+  m_bird.initializeGL(m_objectsProgram);
+  m_pipes.initializeGL(m_objectsProgram, m_bird, 2);
 }
 
 void OpenGLWindow::update() {
@@ -103,9 +103,9 @@ void OpenGLWindow::update() {
     return;
   }
 
-  m_ship.update(m_gameData, deltaTime);
-  m_nuvens.update(m_ship, deltaTime);
-  m_pipes.update(m_ship, deltaTime);
+  m_bird.update(m_gameData, deltaTime);
+  m_nuvens.update(m_bird, deltaTime);
+  m_pipes.update(m_bird, deltaTime);
 
   if (m_gameData.m_state == State::Playing) {
     checkCollisions();
@@ -119,7 +119,7 @@ void OpenGLWindow::paintGL() {
   abcg::glViewport(0, 0, m_viewportWidth, m_viewportHeight);
 
   m_nuvens.paintGL();
-  m_ship.paintGL(m_gameData);
+  m_bird.paintGL(m_gameData);
   m_pipes.paintGL();
 }
 
@@ -161,7 +161,7 @@ void OpenGLWindow::resizeGL(int width, int height) {
 
 void OpenGLWindow::terminateGL() {
   abcg::glDeleteProgram(m_objectsProgram);
-  m_ship.terminateGL();
+  m_bird.terminateGL();
   m_nuvens.terminateGL();
   m_pipes.terminateGL();
 }

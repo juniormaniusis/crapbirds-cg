@@ -187,10 +187,10 @@ void nuvens::terminateGL() {
   }
 }
 
-void nuvens::update(const Ship &ship, float deltaTime) {
+void nuvens::update(const Bird &bird, float deltaTime) {
   for (auto &&[index, nuvem] : iter::enumerate(m_nuvens)) {
     const auto layerSpeedScale{1.0f / (index + 2.0f)};
-    nuvem.m_translation -= ship.m_velocity * deltaTime * layerSpeedScale;
+    nuvem.m_translation -= bird.m_velocity * deltaTime * layerSpeedScale;
 
     if (nuvem.m_translation.x < -1.0f) nuvem.m_translation.x += 2.0f;
     if (nuvem.m_translation.x > +1.0f) nuvem.m_translation.x -= 2.0f;
