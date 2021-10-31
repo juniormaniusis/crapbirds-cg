@@ -4,8 +4,6 @@
 
 void nuvens::initializeGL(GLuint program, int quantity) {
   terminateGL();
-
-  // Start pseudo-random number generator
   m_randomEngine.seed(
       std::chrono::steady_clock::now().time_since_epoch().count());
 
@@ -13,52 +11,19 @@ void nuvens::initializeGL(GLuint program, int quantity) {
   m_colorLoc = abcg::glGetUniformLocation(m_program, "color");
   m_translationLoc = abcg::glGetUniformLocation(m_program, "translation");
 
-  // auto &re{m_randomEngine};
-  std::uniform_real_distribution<float> distPos(-1.0f, 1.0f);
-  std::uniform_real_distribution<float> distIntensity(0.5f, 1.0f);
+  std::uniform_real_distribution<float> faixa(0, 1.0f);
 
-  // p cada camada de estrelas
+  // para cada nuvens, definir a sua aparencia
   for (auto &&[index, nuvem] : iter::enumerate(m_nuvens)) {
-    nuvem.m_translation = glm::vec2(0);
+    nuvem.m_translation = glm::vec2(1, 0);
+  
+    auto sorteado{faixa(m_randomEngine)};
 
-    // std::vector<glm::vec3> data(0);
-    // for ([[maybe_unused]] auto i : iter::range(0, layer.m_quantity)) {
-    //   data.emplace_back(distPos(re), distPos(re), 0);
-    //   data.push_back(glm::vec3(1) * distIntensity(re));
-    // }
-    /*
-      // Generate VBO
-      abcg::glGenBuffers(1, &layer.m_vbo);
-      abcg::glBindBuffer(GL_ARRAY_BUFFER, layer.m_vbo);
-      abcg::glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(glm::vec3),
-                         data.data(), GL_STATIC_DRAW);
-      abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-      // Get location of attributes in the program
-      GLint positionAttribute{abcg::glGetAttribLocation(m_program,
-      "inPosition")}; GLint colorAttribute{abcg::glGetAttribLocation(m_program,
-      "inColor")};
-
-      // Create VAO
-      abcg::glGenVertexArrays(1, &layer.m_vao);
-
-      // Bind vertex attributes to current VAO
-      abcg::glBindVertexArray(layer.m_vao);
-
-      abcg::glBindBuffer(GL_ARRAY_BUFFER, layer.m_vbo);
-      abcg::glEnableVertexAttribArray(positionAttribute);
-      abcg::glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE,
-                                  sizeof(glm::vec3) * 2, nullptr);
-      abcg::glEnableVertexAttribArray(colorAttribute);
-      abcg::glVertexAttribPointer(colorAttribute, 3, GL_FLOAT, GL_FALSE,
-                                  sizeof(glm::vec3) * 2,
-                                  reinterpret_cast<void *>(sizeof(glm::vec3)));
-      abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-      // End of binding to current VAO
-      abcg::glBindVertexArray(0);
-      /*/
-    nuvem = createNuvem(2);
+    if (sorteado > 0.2) {
+      nuvem = createNuvem(1);
+    } else {
+      nuvem = createNuvem(2);
+    }
   }
 }
 
