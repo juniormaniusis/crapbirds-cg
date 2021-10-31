@@ -20,24 +20,23 @@ class StarLayers {
 
  private:
   friend OpenGLWindow;
-  GLuint m_program{};
-  GLint m_colorLoc{};
-  GLint m_rotationLoc{};
-  GLint m_translationLoc{};
-  GLint m_scaleLoc{};
 
-  struct Nuvem {
+  GLuint m_program{};
+  GLint m_pointSizeLoc{};
+  GLint m_translationLoc{};
+
+  struct StarLayer {
     GLuint m_vao{};
     GLuint m_vbo{};
-    glm::vec4 m_color {.5, .5, .5, .5};
+
+    float m_pointSize{};
+    int m_quantity{};
     glm::vec2 m_translation{glm::vec2(0)};
   };
 
-  std::array<Nuvem, 1> m_nuvens;
+  std::array<StarLayer, 5> m_starLayers;
 
   std::default_random_engine m_randomEngine;
-
-  StarLayers::Nuvem createNuvem();
 };
 
 #endif
