@@ -19,7 +19,7 @@ void OpenGLWindow::handleEvent(SDL_Event &event) {
   // Keyboard events
   if (event.type == SDL_KEYDOWN) {
     if (event.key.keysym.sym == SDLK_SPACE)
-      m_gameData.m_input.set(static_cast<size_t>(Input::Fire));
+      m_gameData.m_input.set(static_cast<size_t>(Input::Jump));
     if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_w)
       m_gameData.m_input.set(static_cast<size_t>(Input::Up));
     if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_s)
@@ -31,7 +31,7 @@ void OpenGLWindow::handleEvent(SDL_Event &event) {
   }
   if (event.type == SDL_KEYUP) {
     if (event.key.keysym.sym == SDLK_SPACE)
-      m_gameData.m_input.reset(static_cast<size_t>(Input::Fire));
+      m_gameData.m_input.reset(static_cast<size_t>(Input::Jump));
     if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_w)
       m_gameData.m_input.reset(static_cast<size_t>(Input::Up));
     if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_s)
@@ -45,13 +45,13 @@ void OpenGLWindow::handleEvent(SDL_Event &event) {
   // Mouse events
   if (event.type == SDL_MOUSEBUTTONDOWN) {
     if (event.button.button == SDL_BUTTON_LEFT)
-      m_gameData.m_input.set(static_cast<size_t>(Input::Fire));
+      m_gameData.m_input.set(static_cast<size_t>(Input::Jump));
     if (event.button.button == SDL_BUTTON_RIGHT)
       m_gameData.m_input.set(static_cast<size_t>(Input::Up));
   }
   if (event.type == SDL_MOUSEBUTTONUP) {
     if (event.button.button == SDL_BUTTON_LEFT)
-      m_gameData.m_input.reset(static_cast<size_t>(Input::Fire));
+      m_gameData.m_input.reset(static_cast<size_t>(Input::Jump));
     if (event.button.button == SDL_BUTTON_RIGHT)
       m_gameData.m_input.reset(static_cast<size_t>(Input::Up));
   }
@@ -143,8 +143,6 @@ void OpenGLWindow::paintUI() {
       ImGui::PushFont(m_font_score);
           ImGui::Text("Your Score: %ld", m_gameData.score);
       ImGui::PopFont();    
-    } else if (m_gameData.m_state == State::Win) {
-      ImGui::Text("*You Win!*");
     }
 
     ImGui::PopFont();

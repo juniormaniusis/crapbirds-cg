@@ -159,7 +159,7 @@ void Bird::update(const GameData &gameData, float deltaTime) {
   m_velocity += glm::vec2(0, -4.2) * deltaTime;
 
   // se o jogador clicar, aplica uma força para cima, interrompendo sua queda.
-  if (gameData.m_input[static_cast<size_t>(Input::Fire)] &&
+  if (gameData.m_input[static_cast<size_t>(Input::Jump)] &&
       gameData.m_state == State::Playing) {
     m_velocity.y = 3;
   }
