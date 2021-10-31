@@ -68,13 +68,6 @@ void OpenGLWindow::initializeGL() {
   m_objectsProgram = createProgramFromFile(getAssetsPath() + "objects.vert",
                                            getAssetsPath() + "objects.frag");
 
-  // Create program to render the other objects
-  m_pipeProgram = createProgramFromFile(getAssetsPath() + "pipes.vert",
-                                        getAssetsPath() + "pipes.frag");
-
-  // // Create program to render the stars
-  // m_objectsProgram = createProgramFromFile(getAssetsPath() + "stars.vert",
-  //                                        getAssetsPath() + "stars.frag");
 
   abcg::glClearColor(.53, .61, .92, 0);
 
@@ -156,8 +149,6 @@ void OpenGLWindow::resizeGL(int width, int height) {
 }
 
 void OpenGLWindow::terminateGL() {
-  abcg::glDeleteProgram(m_objectsProgram);
-  abcg::glDeleteProgram(m_objectsProgram);
   abcg::glDeleteProgram(m_objectsProgram);
   m_ship.terminateGL();
   m_nuvens.terminateGL();

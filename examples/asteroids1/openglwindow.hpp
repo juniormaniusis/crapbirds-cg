@@ -23,8 +23,6 @@ class OpenGLWindow : public abcg::OpenGLWindow {
 
  private:
   GLuint m_objectsProgram{};
-  GLuint m_starsProgram{};
-  GLuint m_pipeProgram{};
   int m_viewportWidth{};
   int m_viewportHeight{};
   GameData m_gameData;

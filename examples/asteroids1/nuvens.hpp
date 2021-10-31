@@ -35,7 +35,7 @@ class nuvens {
     int qtd_pts;
   };
 
-  std::array<Nuvem, 2> m_nuvens;
+  std::array<Nuvem, 4> m_nuvens;
 
   std::default_random_engine m_randomEngine;
 
