@@ -84,7 +84,7 @@ void OpenGLWindow::initializeGL() {
 
 void OpenGLWindow::restart() {
   m_gameData.m_state = State::Playing;
-  m_nuvens.initializeGL(m_objectsProgram, 1);
+  m_nuvens.initializeGL(m_objectsProgram);
   m_ship.initializeGL(m_objectsProgram);
   m_pipes.initializeGL(m_objectsProgram, m_ship, 2);
 }

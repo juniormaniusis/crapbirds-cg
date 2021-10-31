@@ -2,7 +2,7 @@
 
 #include <cppitertools/itertools.hpp>
 
-void nuvens::initializeGL(GLuint program, int quantity) {
+void nuvens::initializeGL(GLuint program) {
   terminateGL();
   m_randomEngine.seed(
       std::chrono::steady_clock::now().time_since_epoch().count());
@@ -61,7 +61,7 @@ std::vector<glm::vec2> getModel2Positions() {
       glm::vec2{1, 2}, glm::vec2{2, 1}, glm::vec2{1, 1},
 
   };
-  for (int i = 0; i < positions.size(); i++) {
+  for (int i = 0; i < (int)positions.size(); i++) {
     positions[i] /= glm::vec2{4, 2};
   }
   return positions;
@@ -83,7 +83,7 @@ std::vector<glm::vec2> getModel1Positions() {
 
   std::vector<glm::vec2> positions{C, H, F, C, F, E, C, E, D, E, D, G, D, G, I};
 
-  for (int i = 0; i < positions.size(); i++) {
+  for (int i = 0; i < (int)positions.size(); i++) {
     positions[i] /= glm::vec2{6.34, 6.56};
     positions[i] *= 1.3;
   }
