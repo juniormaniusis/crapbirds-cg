@@ -8,7 +8,7 @@ class Asteroids;
 class Bullets;
 class OpenGLWindow;
 class StarLayers;
-
+class Pipes;
 class Ship {
  public:
   void initializeGL(GLuint program);
@@ -23,6 +23,7 @@ class Ship {
   friend Bullets;
   friend OpenGLWindow;
   friend StarLayers;
+  friend Pipes;
 
   GLuint m_program{};
   GLint m_translationLoc{};

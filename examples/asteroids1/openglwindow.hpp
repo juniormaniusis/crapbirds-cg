@@ -10,6 +10,7 @@
 #include "bullets.hpp"
 #include "ship.hpp"
 #include "starlayers.hpp"
+#include "pipe.hpp"
 
 class OpenGLWindow : public abcg::OpenGLWindow {
  protected:
@@ -30,6 +31,8 @@ class OpenGLWindow : public abcg::OpenGLWindow {
   
   StarLayers m_starLayers;
   Ship m_ship;
+  Pipes m_pipes;
+
 
   abcg::ElapsedTimer m_restartWaitTimer;
 

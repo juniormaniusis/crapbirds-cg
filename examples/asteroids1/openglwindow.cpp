@@ -89,6 +89,7 @@ void OpenGLWindow::restart() {
   m_gameData.m_state = State::Playing;
   m_starLayers.initializeGL(m_starsProgram, 25);
   m_ship.initializeGL(m_objectsProgram);
+  m_pipes.initializeGL(m_objectsProgram, 3);
 }
 
 void OpenGLWindow::update() {
@@ -103,7 +104,7 @@ void OpenGLWindow::update() {
 
   m_ship.update(m_gameData, deltaTime);
   m_starLayers.update(m_ship, deltaTime);
-
+  m_pipes.update(m_ship, deltaTime);
 }
 
 void OpenGLWindow::paintGL() {
@@ -111,9 +112,10 @@ void OpenGLWindow::paintGL() {
 
   abcg::glClear(GL_COLOR_BUFFER_BIT);
   abcg::glViewport(0, 0, m_viewportWidth, m_viewportHeight);
-  
+
   m_starLayers.paintGL();
   m_ship.paintGL(m_gameData);
+  m_pipes.paintGL();
 }
 
 void OpenGLWindow::paintUI() {
@@ -155,4 +157,5 @@ void OpenGLWindow::terminateGL() {
 
   m_ship.terminateGL();
   m_starLayers.terminateGL();
+  m_pipes.terminateGL();
 }

@@ -181,9 +181,9 @@ void Ship::update(const GameData &gameData, float deltaTime) {
         glm::wrapAngle(m_rotation - glm::length(m_velocity) * deltaTime);
   }
 
-  printf("rotation::%f", m_rotation);
+  // printf("rotation::%f", m_rotation);
   m_rotation = glm::wrapAngle(m_rotation);
-  printf("rotation::%f", m_rotation);
+  // printf("rotation::%f", m_rotation);
 
   // Apply thrust
   // if (gameData.m_input[static_cast<size_t>(Input::Fire)] &&
