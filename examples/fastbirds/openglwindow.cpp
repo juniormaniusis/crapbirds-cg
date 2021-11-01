@@ -17,43 +17,22 @@ void OpenGLWindow::checkCollisions() {
 
 void OpenGLWindow::handleEvent(SDL_Event &event) {
   // Keyboard events
-  if (event.type == SDL_KEYDOWN) {
-    if (event.key.keysym.sym == SDLK_SPACE)
-      m_gameData.m_input.set(static_cast<size_t>(Input::Jump));
-    if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_w)
-      m_gameData.m_input.set(static_cast<size_t>(Input::Up));
-    if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_s)
-      m_gameData.m_input.set(static_cast<size_t>(Input::Down));
-    if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a)
-      m_gameData.m_input.set(static_cast<size_t>(Input::Left));
-    if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
-      m_gameData.m_input.set(static_cast<size_t>(Input::Right));
-  }
-  if (event.type == SDL_KEYUP) {
-    if (event.key.keysym.sym == SDLK_SPACE)
-      m_gameData.m_input.reset(static_cast<size_t>(Input::Jump));
-    if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_w)
-      m_gameData.m_input.reset(static_cast<size_t>(Input::Up));
-    if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_s)
-      m_gameData.m_input.reset(static_cast<size_t>(Input::Down));
-    if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a)
-      m_gameData.m_input.reset(static_cast<size_t>(Input::Left));
-    if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
-      m_gameData.m_input.reset(static_cast<size_t>(Input::Right));
+  if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE) {
+    m_gameData.m_input.set(static_cast<size_t>(Input::Jump));
   }
 
-  // Mouse events
-  if (event.type == SDL_MOUSEBUTTONDOWN) {
-    if (event.button.button == SDL_BUTTON_LEFT)
-      m_gameData.m_input.set(static_cast<size_t>(Input::Jump));
-    if (event.button.button == SDL_BUTTON_RIGHT)
-      m_gameData.m_input.set(static_cast<size_t>(Input::Up));
+  if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_SPACE) {
+    m_gameData.m_input.reset(static_cast<size_t>(Input::Jump));
   }
-  if (event.type == SDL_MOUSEBUTTONUP) {
-    if (event.button.button == SDL_BUTTON_LEFT)
-      m_gameData.m_input.reset(static_cast<size_t>(Input::Jump));
-    if (event.button.button == SDL_BUTTON_RIGHT)
-      m_gameData.m_input.reset(static_cast<size_t>(Input::Up));
+
+  if (event.type == SDL_MOUSEBUTTONDOWN &&
+      event.button.button == SDL_BUTTON_LEFT) {
+    m_gameData.m_input.set(static_cast<size_t>(Input::Jump));
+  }
+  
+  if (event.type == SDL_MOUSEBUTTONUP &&
+      event.button.button == SDL_BUTTON_LEFT) {
+    m_gameData.m_input.reset(static_cast<size_t>(Input::Jump));
   }
 }
 
@@ -139,10 +118,10 @@ void OpenGLWindow::paintUI() {
     ImGui::PushFont(m_font);
     if (m_gameData.m_state == State::GameOver) {
       ImGui::Text("Game Over!");
-      
+
       ImGui::PushFont(m_font_score);
-          ImGui::Text("Your Score: %ld", m_gameData.score);
-      ImGui::PopFont();    
+      ImGui::Text("Your Score: %ld", m_gameData.score);
+      ImGui::PopFont();
     }
 
     ImGui::PopFont();
