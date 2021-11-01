@@ -26,9 +26,9 @@ Fizemos os desenhos através do [geogebra](https://www.geogebra.org/calculator) 
 
 ### Código
 
-* nuvens.cpp: o desenho das nuvens foi criado no geogebra e extraímos os pontos de seu formato. Criamos um *array de nuvens* e uma função que faz com que os desenhos das nuvens sejam escolhidos aleatoriamente (são dois tipos de desenho, eles vão aparecendo durante o jogo).
-* bird.cpp: possui vetor de "positions" do pássaro. As posições são indexadas, reaproveita-se pontos. É definida a estrutura geral do pássaro (posição, cores).
-* openglwindow.cpp:
-* pipe.cpp: 
-* main.cpp:
+* nuvens.cpp: o desenho das nuvens foi criado no geogebra e extraímos os pontos de seu formato a partir de triângulos. Criamos um *array de nuvens* e uma função que faz com que os desenhos das nuvens sejam escolhidos aleatoriamente (são dois tipos de desenho, eles vão aparecendo durante o jogo). 
+* bird.cpp: possui vetor de "positions" do pássaro. As posições são indexadas, reaproveita-se pontos. É definida a estrutura geral do pássaro (posição, cores). Os pontos do pássaro também foram extraídos do geogebra e feitos a partir de triângulos. Para deixar o pássaro dinâmico quando ele está indo para cima (velocidade no eixo y positiva) aumentamos a rotação da sua figura no sentido anti-horário. Analogamente, quando o pássaro vai para baixo, a imagem é rotacionada no sentido horário. Além disso, uma força gravitacional empurra o pássaro para baixo e quando surge uma ação do jogador, a queda é interrompida e é aplicada uma força para cima.
+* openglwindow.cpp: detecta o clique do usuário e as colisões entre o pássaro e a tubulação. Também é responsável pelas mensagens de "game over", controle da pontuação do usuário e reiniciar o jogo após passados 5 segundos do game over.
+* pipe.cpp: representa a tubulação que impede o pássaro se mover para cima e para baixo (é o "obstáculo"). Fica fixo na tela. 
+* main.cpp: arquivo que descreve algumas configurações da janela do jogo.
 * gamedata.hpp: definição dos comandos e estado do jogo. São definidas as posições (direita, esquerda, pular), estado (jogando, fim de jogo) e também uma pontuação para o jogador. Quanto mais tempo ele se mantem no jogo, maior sua pontuação.
